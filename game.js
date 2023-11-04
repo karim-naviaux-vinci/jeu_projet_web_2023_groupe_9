@@ -112,8 +112,50 @@ function updatePlayersAndCheckGameOver() {
 }
 
 function reduceLife() {
-  // La logique du code de réduction de la vie des joueurs reste inchangée.
-  // Assurez-vous qu'elle est correcte dans votre application.
+  if (players.player1Time > players.player2Time) {
+    avatarOfPlayer2.setAttribute("id", "player2_attack");
+    setTimeout(() => {
+      avatarOfPlayer1.setAttribute("id", "player1_blesse");
+    }, 1000);
+    setTimeout(() => {
+      avatarOfPlayer2.setAttribute("id", "player2");
+      avatarOfPlayer1.setAttribute("id", "player1_seReleve");
+      setTimeout(() => {
+        avatarOfPlayer1.setAttribute("id", "player1");
+      }, 1000);
+    }, 2000);
+    setTimeout(() => {
+      players.player1Life -= 10;
+      player1LifeDisplay.innerText = players.player1Life;
+      player1LifeDisplay.style.width = players.player1Life + "px";
+    }, 1000);
+  } else if (players.player1Time < players.player2Time) {
+    avatarOfPlayer1.setAttribute("id", "player1_attack");
+    setTimeout(() => {
+      avatarOfPlayer2.setAttribute("id", "player2_blesse");
+    }, 1000);
+    setTimeout(() => {
+      avatarOfPlayer1.setAttribute("id", "player1");
+      avatarOfPlayer2.setAttribute("id", "player2_seReleve");
+      setTimeout(() => {
+        avatarOfPlayer2.setAttribute("id", "player2");
+      }, 1000);
+    }, 2000);
+    setTimeout(() => {
+      players.player2Life -= 10;
+      player2LifeDisplay.innerText = players.player2Life;
+      player2LifeDisplay.style.width = players.player2Life + "px";
+    }, 1000);
+  }
+  if (players.player1Life <= 0) {
+    avatarOfPlayer1.setAttribute('id', 'player1_mort');
+    console.log("Player 2 wins!");
+  } else if (players.player2Life <= 0) {
+    avatarOfPlayer2.setAttribute('id', 'player2_mort');
+    console.log("Player 1 wins!");
+  }
+  isPreparationTime = true;
+  document.addEventListener("keydown", handleKeyboardInput);
 }
 
 function resetCounters() {
@@ -137,6 +179,22 @@ function updateTimer() {
     }
   }
 }
+
+// function updateTimer() {
+//   if (gameTimerData.countDown > 0) {
+//     if (players.currentPlayer === 1) {
+//       players.player1Time++;
+//     }
+//     if (players.currentPlayer === 2) {
+//       players.player2Time++;
+//     }
+
+//     gameTimerData.countDown--;
+//     timerDisplay.textContent = gameTimerData.countDown;
+//   } else {
+//     handleTimerFinish();
+//   }
+// }
 
 function handleTimerFinish() {
   clearInterval(gameTimerData.timer);
