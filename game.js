@@ -33,8 +33,10 @@ const gameTimerData = {
   countDown: 20,
 };
 
-let isPreparationTime = false;
-let preparationCountDown = 5;
+const gamePreparationTimerData = {
+  isPreparationTime : false,
+  preparationCountDown : 5
+}
 
 switchText();
 startTimer();
@@ -180,21 +182,6 @@ function updateTimer() {
   }
 }
 
-// function updateTimer() {
-//   if (gameTimerData.countDown > 0) {
-//     if (players.currentPlayer === 1) {
-//       players.player1Time++;
-//     }
-//     if (players.currentPlayer === 2) {
-//       players.player2Time++;
-//     }
-
-//     gameTimerData.countDown--;
-//     timerDisplay.textContent = gameTimerData.countDown;
-//   } else {
-//     handleTimerFinish();
-//   }
-// }
 
 function handleTimerFinish() {
   clearInterval(gameTimerData.timer);
